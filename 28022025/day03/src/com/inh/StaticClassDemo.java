@@ -10,7 +10,7 @@ class MachineData{
 	}
 	class InnerClass2{
 		void show() {
-			System.out.println("non-static inner class"+pin);
+			System.out.println("non-static inner class "+pin);
 		}
 	}
 }
@@ -23,5 +23,7 @@ public class StaticClassDemo {
 		
 		
 		
-		MachineData.InnerClass2 obj3= new obj2.InnerClass2();
+		MachineData.InnerClass2 obj3= obj2.new InnerClass2();
+		obj3.show();
+	}
 }
