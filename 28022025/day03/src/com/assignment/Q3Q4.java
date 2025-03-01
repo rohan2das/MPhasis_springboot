@@ -1,5 +1,6 @@
 package com.assignment;
 
+import java.util.Scanner;
 import java.util.regex.Pattern;
 
 class User{
@@ -95,6 +96,35 @@ public class Q3Q4 {
 		obj.register("Prime", "prime.sleepy@example.com", "Prime@123456789");
 		User foundObject= obj.getUser("rohan.das@example.com");
 		System.out.println(foundObject);
+		
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Hello, Choose from: ");
+		System.out.println("1.Create User \n"
+				+ "2.Find User \n"
+				+ "3. Exit");
+		int res = sc.nextInt();
+		switch (res) {
+		case 1: {
+			
+			System.out.print("Name: ");
+			String nameResponse = sc.nextLine();
+			System.out.print("E-mail: ");
+			String emailResponse = sc.nextLine();
+			System.out.print("Password: ");
+			String passResponse = sc.nextLine();
+			obj.register(nameResponse, emailResponse, passResponse);
+		}
+		case 2: {
+			System.out.print("provide the Email: ");
+			String getUserByEmail = sc.nextLine();
+			obj.getUser(getUserByEmail);
+		}
+		case  3: {
+			return;
+		}
+		default:
+			throw new IllegalArgumentException("Unexpected value: " + res);
+		}
 	}
 
 }
