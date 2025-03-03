@@ -6,6 +6,8 @@ id name age gender YOJ salary
 1. iterate using stream API and print starts with a specific character
 2. who joined after 2020 using stream API 
 3. (2) and in sorted manner and store in new list
+
+--> add some duplicate values and count the duplicate. Print only the distinct data.
 */
 
 package com.cls;
@@ -15,6 +17,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+//mind the extra 'e' in "Employeee"
 class Employeee{
 	private int id;
 	private String name;
@@ -82,9 +85,12 @@ public class StreamsExample {
 	public static void main(String[] args) {
 		List<Employeee> empList = new ArrayList<>();
 		empList.add(new Employeee(3,"Rahul", 29,"Male", 2016, 350));
+		empList.add(new Employeee(3,"Rahul", 29,"Male", 2016, 350));
+		empList.add(new Employeee(2,"Gill", 24,"Male", 2021, 400));
 		empList.add(new Employeee(2,"Gill", 24,"Male", 2021, 400));
 		empList.add(new Employeee(1,"Rohit", 38,"Male", 2008, 550));
 		empList.add(new Employeee(5,"Kohli", 35,"Male", 2009, 600));
+		empList.add(new Employeee(4,"Jhulan", 40,"Female", 2006, 300));
 		empList.add(new Employeee(4,"Jhulan", 40,"Female", 2006, 300));
 		empList.add(new Employeee(7,"Rana", 22,"Female", 2024, 250));
 		empList.add(new Employeee(6,"Rinku", 27, "Male", 2022, 300));
@@ -111,6 +117,17 @@ public class StreamsExample {
 				
 				
 		formattedData.forEach(emp->System.out.println(emp.getId()+" | "+emp.getName()+" | "+emp.getAge()+" | "+emp.getGender()+" | "+emp.getYoj()));
+		
+		
+		
+		//count the duplicate and show only distinct values
+		System.out.println("only distinct names");
+		//getting all the names from employeee object
+		List<String> namesEmp =	empList.stream().map(emp-> emp.getName()).toList();
+		//filtering the duplicate ones out
+		List<String> distinctNames = namesEmp.stream().distinct().collect(Collectors.toList());
+		System.out.println(distinctNames);
+		System.out.println("No. of Distinct Names in the list: "+distinctNames.size());
 		
 		
 	}
