@@ -4,7 +4,7 @@
  * monthly average spending in the e-com
  * find out minimum order price in total orders
  * find out first and last product from your purchase history
- * order id, order name, order category, quantity, order price, order month, order year, order city
+ * Orders(order id, order name, order category, quantity, order price, order month, order year, order city)
  */
 
 package com.cls;
@@ -114,6 +114,10 @@ class Orders{
 				+ price + ", month=" + month + ", year=" + year + ", city=" + city + "]";
 	}
 	
+	public double getTotalCost() {
+		return price*quantity;
+	}
+	
 }
 
 public class CollectionsAssignment {
@@ -128,7 +132,7 @@ public class CollectionsAssignment {
 	}
 	
 	public static void getCategoryWiseOrders(List<Orders> listOrders) {
-		System.out.println("Category wise order details");
+		System.out.print("\nCategory wise order details");
 		Map<String,List<Orders>> res = listOrders.stream().collect(Collectors.groupingBy(Orders::getCategory));
 		for(String s : res.keySet()) {
 			System.out.println("\nCategory: "+ s);
@@ -140,23 +144,30 @@ public class CollectionsAssignment {
 	public static void getMaxPrice(List<Orders> orderList) {
 		Optional<Orders> order = orderList.stream()
 				.sorted(Comparator.comparing(Orders :: getPrice).reversed()).findFirst();
-		System.out.println("Most Expencive order: "+ order.get());
+		System.out.println("\nMost Expensive order: "+ order.get());
 	}
 	
 	public static void getAverageSpending(List<Orders> orderList) {
+		System.out.println("\nAverage spending per month");
 		Map<String, Double> monthlySpending = orderList.stream()
 	            .collect(Collectors.groupingBy(
 	                order -> order.getMonth() + " " + order.getYear(),
-	                Collectors.summingDouble(Orders::getPrice)
-	            ));
-			System.out.println(monthlySpending);
-//	        double averageMonthlySpending = monthlySpending.values().stream()
-//	            .mapToDouble(Double::doubleValue)
-//	            .average()
-//	            .orElse(0.0);
-//
-//	        System.out.println("Average Monthly Spending: " + averageMonthlySpending);
+	                Collectors.averagingDouble(Orders::getTotalCost)
+	            ));			
+			monthlySpending.forEach((monthYear, spending)->System.out.println(monthYear+ " : "+spending));
 	}
+	public static void getMinPrice(List<Orders> orderList) {
+		Optional<Orders> empl=orderList.stream().
+				min(Comparator.comparingDouble(Orders::getTotalCost));
+		System.out.println("\nThe minimum order price of all orders: "+ empl.get().getName());
+	}
+	
+	public static void getMinMaxPurchaseDate(List<Orders> orderList) {
+		List<Orders> sortedOrders=orderList.stream().sorted(Comparator.comparingInt(Orders::getYear)).collect(Collectors.toList());
+		System.out.println("\nOldest order: "+ sortedOrders.getFirst());
+		System.out.println("Newest order: "+ sortedOrders.getLast());
+	}
+		
 	public static void main(String[] args) {
 		List<Orders> orderList = new ArrayList<>();
 		orderList.add(new Orders(101, "iPhone", "Gadgets", 50, 19.99, "March", 2025, "Mumbai"));
@@ -169,15 +180,16 @@ public class CollectionsAssignment {
 		orderList.add(new Orders(109, "iPad", "Gadgets", 45, 34.99, "December", 2021, "Surat"));
 		orderList.add(new Orders(111, "Watch", "Accessories", 55, 12.99, "January", 2020, "Lucknow"));
 		orderList.add(new Orders(113, "MacBook", "Gadgets", 33, 17.99, "March", 2021, "Indore"));
-		orderList.add(new Orders(112, "Screwdriver", "Tools", 22, 27.99, "February", 2019, "Patna"));
+		orderList.add(new Orders(112, "Screwdriver", "Tools", 22, 27.99, "February", 2015, "Patna"));
 		orderList.add(new Orders(115, "Smartwatch", "Gadgets", 48, 49.99, "May", 2020, "Nagpur"));
 		orderList.add(new Orders(114, "Headphones", "Electronics", 18, 22.99, "April", 2023, "Bhopal"));
 		orderList.add(new Orders(110, "Smartphone", "Electronics", 60, 44.99, "March", 2020, "Jaipur"));;
 		
-//		CollectionsAssignment.getHighestOrder(orderList);
-//		CollectionsAssignment.getCategoryWiseOrders(orderList);
-//		CollectionsAssignment.getMaxPrice(orderList);
+		CollectionsAssignment.getHighestOrder(orderList);
+		CollectionsAssignment.getCategoryWiseOrders(orderList);
+		CollectionsAssignment.getMaxPrice(orderList);
 		CollectionsAssignment.getAverageSpending(orderList);
-		
+		CollectionsAssignment.getMinPrice(orderList);
+		CollectionsAssignment.getMinMaxPurchaseDate(orderList);		
 	}
-}
+} 
