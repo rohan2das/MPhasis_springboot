@@ -1,5 +1,5 @@
 /* Find out the highest orders in a year
- * find out category(lifestyle, sport) wise orders count
+ * find out category wise orders count
  * print max price
  * monthly average spending in the e-com
  * find out minimum order price in total orders
@@ -122,15 +122,17 @@ class Orders{
 
 public class CollectionsAssignment {
 	
+	//Find out the highest orders in a year
 	public static void getHighestOrder(List<Orders> orderList) {
 		System.out.println("Maximum order in a year");
 		
 		Map<Integer, Optional<Orders>> res = orderList.stream()
 				.collect(Collectors.groupingBy(Orders :: getYear, 
-						Collectors.maxBy(Comparator.comparingInt(Orders :: getQuantity))));
-		res.forEach((k,v)-> System.out.println(k+" : "+v.get().getQuantity()));
+						Collectors.maxBy(Comparator.comparingDouble(Orders :: getTotalCost))));
+		res.forEach((k,v)-> System.out.println(k+" : "+v.get().getName()));
 	}
 	
+	//find out category wise orders
 	public static void getCategoryWiseOrders(List<Orders> listOrders) {
 		System.out.print("\nCategory wise order details");
 		Map<String,List<Orders>> res = listOrders.stream().collect(Collectors.groupingBy(Orders::getCategory));
@@ -141,12 +143,14 @@ public class CollectionsAssignment {
 		}
 	}
 	
+	//print max price
 	public static void getMaxPrice(List<Orders> orderList) {
 		Optional<Orders> order = orderList.stream()
 				.sorted(Comparator.comparing(Orders :: getPrice).reversed()).findFirst();
 		System.out.println("\nMost Expensive order: "+ order.get());
 	}
 	
+	//monthly average spending
 	public static void getAverageSpending(List<Orders> orderList) {
 		System.out.println("\nAverage spending per month");
 		Map<String, Double> monthlySpending = orderList.stream()
@@ -156,12 +160,15 @@ public class CollectionsAssignment {
 	            ));			
 			monthlySpending.forEach((monthYear, spending)->System.out.println(monthYear+ " : "+spending));
 	}
+	
+	//find out minimum order price in total orders
 	public static void getMinPrice(List<Orders> orderList) {
 		Optional<Orders> empl=orderList.stream().
 				min(Comparator.comparingDouble(Orders::getTotalCost));
 		System.out.println("\nThe minimum order price of all orders: "+ empl.get().getName());
 	}
 	
+	//find out first and last product from your purchase history
 	public static void getMinMaxPurchaseDate(List<Orders> orderList) {
 		List<Orders> sortedOrders=orderList.stream().sorted(Comparator.comparingInt(Orders::getYear)).collect(Collectors.toList());
 		System.out.println("\nOldest order: "+ sortedOrders.getFirst());
