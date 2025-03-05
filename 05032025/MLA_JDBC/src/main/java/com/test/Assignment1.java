@@ -11,7 +11,58 @@ import java.util.List;
 
 public class Assignment1 {
 	
+	public static void getHighestOrder(Statement stmt) throws SQLException {
+		String sql = "SELECT year, SUM(quantity) AS total_orders FROM orders GROUP BY year ORDER BY total_orders DESC LIMIT 1";
+		ResultSet rs = stmt.executeQuery(sql);
+		while(rs.next()) {
+		    System.out.println("Year with Highest Orders: " + rs.getInt("year") + " | Total Orders: " + rs.getInt("total_orders"));
+		}
+	}
 	
+	public static void getCategoryWiseOrders(Statement stmt) throws SQLException {
+		String sql = "SELECT category, SUM(quantity) AS total_orders FROM orders GROUP BY category ORDER BY total_orders DESC";
+		ResultSet rs = stmt.executeQuery(sql);
+		System.out.println("Category-wise Orders:");
+		while(rs.next()) {
+		    System.out.println("Category: " + rs.getString("category") + " | Total Orders: " + rs.getInt("total_orders"));
+		}
+
+	}
+	
+	public static void getMaxPrice(Statement stmt) throws SQLException {
+		String sql = "SELECT MAX(price) AS max_price FROM orders";
+		ResultSet rs = stmt.executeQuery(sql);
+		if(rs.next()) {
+		    System.out.println("Maximum Price: " + rs.getDouble("max_price"));
+		}
+	}
+		
+	public static void getAvgMonthlySpnding(Statement stmtt) throws SQLException {
+		String sql = "SELECT AVG(price * quantity) AS avg_monthly_spending FROM orders";
+		ResultSet rs = stmtt.executeQuery(sql);
+		if(rs.next()) {
+		    System.out.println("Average Monthly Spending: " + rs.getDouble("avg_monthly_spending"));
+		}
+	}
+	
+	public static void getMinOrderPrice(Statement stmt) throws SQLException {
+		String sql = "SELECT MIN(price) AS min_order_price FROM orders";
+		ResultSet rs = stmt.executeQuery(sql);
+		if(rs.next()) {
+		    System.out.println("Minimum Order Price: " + rs.getDouble("min_order_price"));
+		}
+	}
+	
+	public static void getFirstorder(Statement stmt) throws SQLException {
+		String sql = "SELECT id, name, MIN(year) AS first_order_year, MIN(month) AS first_order_month FROM orders GROUP BY id, name ORDER BY first_order_year, first_order_month";
+		ResultSet rs = stmt.executeQuery(sql);
+		System.out.println("First Order of Each Customer:");
+		while(rs.next()) {
+		    System.out.println("ID: " + rs.getInt("id") + " | Name: " + rs.getString("name") + 
+		        " | First Order: " + rs.getString("first_order_month") + " " + rs.getInt("first_order_year"));
+		}
+
+	}
 	
 	public static void main(String[] args) throws Exception {
 		List<Orders> orderList = new ArrayList<>();
@@ -60,11 +111,26 @@ public class Assignment1 {
 		System.out.println("ID: "+rs.getInt(1)+" Name: "+rs.getString(2)+" Category: "+rs.getString(3)+" Quantity: "+rs.getInt(4)+" Price: "+rs.getDouble(5)+" Month: "+rs.getString(6)+" Year:"+rs.getInt(7)+" City:"+rs.getString(8));
 		}
 		
-		
 		//delete operation
 		
 		
-		//5. close the connection object
+		
+		//1. find highest orders in the year
+		Assignment1.getHighestOrder(stmt);
+		//2. find out category wise orders
+		Assignment1.getCategoryWiseOrders(stmt);
+		//3. print max price
+		Assignment1.getMaxPrice(stmt);
+		//4. Avg monthly spending in the e-com
+		Assignment1.getAvgMonthlySpnding(stmt);
+		//5. find out min order price in  the total orders
+		Assignment1.getMinOrderPrice(stmt);
+		//6. find out the 1st order of the customer 
+		Assignment1.getFirstorder(stmt);
+		
+		
+		
+		
 		con.close();
 	}
 }
