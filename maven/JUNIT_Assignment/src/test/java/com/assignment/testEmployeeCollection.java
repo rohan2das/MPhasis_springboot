@@ -10,6 +10,9 @@ import static org.hamcrest.CoreMatchers.*;
 import java.util.Arrays;
 import java.util.List;
 
+import org.junit.jupiter.api.Test;
+
+
 
 
 public class testEmployeeCollection {
@@ -73,6 +76,16 @@ public class testEmployeeCollection {
 		assertEquals("name is too long", exception.getMessage());
 		System.out.println(exception.getMessage());
 
+	}
+	
+	@Test
+	public void testIdNull() {
+		Throwable exception = assertThrows(IllegalArgumentException.class, ()->{
+			Employee obj = new Employee();
+			obj.setId(0);
+		});
+		assertEquals("id cannot be null", exception.getMessage());
+		System.out.println(exception.getMessage());
 	}
 	
 	

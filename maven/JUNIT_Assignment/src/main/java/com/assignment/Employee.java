@@ -23,7 +23,13 @@ public class Employee {
 		return id;
 	}
 	public void setId(int id) {
-		this.id = id;
+		if(id == 0) {
+			throw new IllegalArgumentException("id cannot be null");
+		}
+		else{
+			this.id = id;
+		}
+		
 	}
 	public String getName() {
 		return name;
