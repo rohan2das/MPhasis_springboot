@@ -63,7 +63,7 @@ public class CalculatorTest {
 	
 	@Test
 	public void testGreetUser() {
-		System.out.println("tetGreetUser method");
+		System.out.println("testGreetUser method");
 		assertEquals("hello world", obj.greetUser("hello world"));
 	}
 }
