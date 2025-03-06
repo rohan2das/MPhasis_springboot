@@ -83,13 +83,14 @@ public class Assignment1 {
 		
 		Class.forName("com.mysql.jdbc.Driver");
 		
-		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/rohan", "root","Rohan@123");
+		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/rohan", "root","root@39");
 		
 		Statement stmt =con.createStatement();
 		
 		//create table
 		String sqlCreate = "create table orders(id int, name varchar(50), category varchar(20), quantity int, price float, month varchar(10), year int, city varchar(20));";
 		stmt.execute(sqlCreate);
+		System.out.println("table creation done");
 		
 		//insert into table
 		orderList.forEach(order-> {
@@ -103,6 +104,8 @@ public class Assignment1 {
 				e.printStackTrace();
 			}
 		});
+		
+		System.out.println("insertion done");
 		
 		//viewing data
 		String sqlGet = "select * from orders";
