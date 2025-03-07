@@ -30,18 +30,27 @@ public class Register extends HttpServlet {
 		String username="root";
 		String password = "root@39";
 		try {
+			
+			User obj = new User();
+			obj.setFullName(name);
+			obj.setUserName(uname);
+			obj.setPassword(pass);
+			
 			Class.forName("com.mysql.jdbc.Driver");
 			Connection con =DriverManager.getConnection(urlMySql, username, password); 
 			String sql = "insert into user_mla (mla_fname, mla_user, mla_pass) values(?,?,?)";
 			PreparedStatement pst = con.prepareStatement(sql);
-			pst.setString(1, name);
-			pst.setString(2, uname);
-			pst.setString(3, pass);
+			pst.setString(1, obj.getFullName());
+			pst.setString(2, obj.getUserName());
+			pst.setString(3, obj.getPassword());
 			int x =pst.executeUpdate();
 			
 			if(x>0) {
-				RequestDispatcher rd = request.getRequestDispatcher("home.html");
-				rd.forward(request, response);
+//				RequestDispatcher rd = request.getRequestDispatcher("home.html");	//this will show uname, pass from the url
+//				rd.forward(request, response);
+				
+				response.sendRedirect("home.html");		//this will hide the uname, pass from the url
+//				response.sendRedirect("https://codeshare.io/k0oWn3");
 			}
 			else {
 				out.println("<center> <h3><font color = 'red'>Registration Failed</font></h3> </center>");
