@@ -37,17 +37,20 @@ public class Login extends HttpServlet {
 			String sql = "select mla_user, mla_pass from user_mla where mla_user = ? and mla_pass = ?";
 			PreparedStatement pst = con.prepareStatement(sql);
 			
-//			ResultSet rs = pst.executeQuery();
 			pst.setString(1, name);
 			pst.setString(2, pass);
 			
-			boolean b = pst.execute();
-			
-			if(b) {
+			ResultSet rs = pst.executeQuery();
+//			boolean b = pst.execute();
+			while(rs.next()) {
+				
+			if(rs.getString(1).equals(name)) {
 				RequestDispatcher rd = request.getRequestDispatcher("home.html");
 				rd.forward(request, response);
 			}
-			else {
+			break;
+			}
+			if(true) {
 				out.println("<center> <h3><font color = 'red'>Login Failed</font></h3> </center>");
 				RequestDispatcher rd = request.getRequestDispatcher("login.html");
 				rd.include(request, response);
