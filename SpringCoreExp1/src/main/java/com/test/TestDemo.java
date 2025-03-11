@@ -8,7 +8,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 public class TestDemo {
 	public static void main(String[] args) {
 		ApplicationContext ctx = new AnnotationConfigApplicationContext(EmpConfig.class);
-		Employee obj = (Employee)ctx.getBean("getEmp2");
+		Address obj = ctx.getBean("getAdr2", Address.class);
 		
 		System.out.println(obj);
 	}
