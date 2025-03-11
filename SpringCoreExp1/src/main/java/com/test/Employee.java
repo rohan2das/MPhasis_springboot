@@ -44,6 +44,14 @@ public class Employee {
 		this.city = city;
 	}
 	
+	public Address getAobj() {
+		return aobj;
+	}
+
+	public void setAobj(Address aobj) {
+		this.aobj = aobj;
+	}
+
 	@Override
 	public String toString() {
 		return "Employee [id=" + id + ", name=" + name + ", cmp=" + cmp + ", city=" + city + ", Address= "+ aobj + "]";

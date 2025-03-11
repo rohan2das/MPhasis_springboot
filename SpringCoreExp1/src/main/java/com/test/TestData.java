@@ -10,11 +10,13 @@ public class TestData {
 	public static void main(String[] args) {
 		
 		
+		System.out.println("before bean.xml");
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("beans.xml");
 		
 //		Employee obj = (Employee)ctx.getBean("emp");
-		
+		System.out.println("before getbean()");
 		Employee obj = ctx.getBean("emp", Employee.class);
+		System.out.println("after getbean()");
 		
 		System.out.println(obj);
 		
