@@ -24,14 +24,32 @@ public class StoreData {
 		//transient state
 		Book b = new Book();
 		
-		b.setB_name("Spring");
-		b.setB_author("RodJ");
+		b.setB_name("PyThon");
+		b.setB_author("nohTyP");
 		b.setB_price(123);
 		
-		//5 execute the object
-		session.save(b);	//persistent state
+		//5 execute the objec
 		
-		t.commit();	//inserting
+		//inserting
+//		session.save(b);	//persistent state
+//		t.commit();	//inserting
+		
+		//read the data
+//		Book bobj = session.get(Book.class, 2);
+//		System.out.println(bobj.getId()+" "+bobj.getB_name()+" "+bobj.getB_author()+" "+bobj.getB_price());
+		
+//		delete
+		Book bobj = session.get(Book.class, 3);
+		Book bobj4 = session.get(Book.class, 4);
+		session.delete(bobj);
+		session.delete(bobj4);
+		t.commit();
+		
+		
+		//update
+//		bobj.setB_name("Servlet");
+//		session.save(bobj);
+//		t.commit();
 		
 		System.out.println("Done");
 		
