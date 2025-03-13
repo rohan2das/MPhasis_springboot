@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.test</groupId>
-	<artifactId>SpringBootMVC</artifactId>
+	<artifactId>SpringBootMVC2</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>SpringBootMVC</name>
+	<name>SpringBootMVC2</name>
 	<description>Demo project for Spring Boot</description>
 	<url/>
 	<licenses>
@@ -46,7 +46,7 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-
+		
 		<dependency>
 			<groupId>jstl</groupId>
 			<artifactId>jstl</artifactId>
@@ -56,7 +56,7 @@
 			<groupId>org.apache.tomcat.embed</groupId>
 			<artifactId>tomcat-embed-jasper</artifactId>
 		</dependency>
-		
+
 	</dependencies>
 
 	<build>
