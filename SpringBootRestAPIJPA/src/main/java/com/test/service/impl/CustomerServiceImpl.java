@@ -15,6 +15,10 @@ public class CustomerServiceImpl implements CustomerService{
 	@Autowired
 	private CustomerDao customerDao;
 	
+	public void setCustomerDao(CustomerDao customerDao) {
+		this.customerDao = customerDao;
+	}
+
 	@Override
 	public Customer createCustomer(Customer cst) {
 
