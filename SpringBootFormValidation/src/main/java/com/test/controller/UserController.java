@@ -1,5 +1,6 @@
 package com.test.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -8,12 +9,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.test.entity.User;
+import com.test.service.UserService;
 
 import jakarta.validation.Valid;
 
 @Controller
 public class UserController {
 	
+	@Autowired
+	UserService service;
 	
 	@GetMapping("/")
 	public String homePage() {
@@ -31,11 +35,21 @@ public class UserController {
 	public String SubmitUserForm(
 			@Valid 
 			@ModelAttribute("user") User user, 
-			BindingResult bindingResult) {
+			BindingResult bindingResult, Model model) {
 		
 		if(bindingResult.hasErrors()) {
 			return "register";
 		}
+		
+		boolean validateCity = service.validateCity(user);
+		if(validateCity) {
+			String msg = "Please check the form and to city";
+			model.addAttribute("user",msg);
+			return "error";
+		}
+		
+		service.reservationRequest(user);
+		
 		return "success";
 	}
 }
