@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.test.entity.UserClass;
 
+import io.swagger.v3.oas.annotations.Operation;
+
 @RestController
 public class HelloWorldActutor {
 
@@ -20,6 +22,7 @@ public class HelloWorldActutor {
 	@Value("${desg.role}")
 	String desgrole;
 	
+	@Operation(summary = "get method prints simple actuator", description = "this is very basic example of actuator")
 	@GetMapping("/test")
 	public String testActuator() {
 		obj.setFname(fname);

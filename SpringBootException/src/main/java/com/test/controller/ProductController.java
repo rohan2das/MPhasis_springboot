@@ -18,6 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.test.entity.Product;
 import com.test.service.ProductService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
+@Tag(name= "ProductController", description = "simple exception handling")
 @RestController
 @RequestMapping("/")
 public class ProductController {
@@ -29,6 +33,7 @@ public class ProductController {
 		this.service = service;
 	}
 	
+	@Operation(summary = "post method creates the data", description = "getting the data from model and storing in db")
 	@PostMapping("/create")
 	public ResponseEntity<Product> createProduct(@RequestBody Product prd) {
 		//product object
@@ -37,6 +42,7 @@ public class ProductController {
 		return new ResponseEntity<>(prObj, HttpStatus.CREATED);
 	}
 	
+	@Operation(summary = "get method reades the data", description = "getting the data from database and exporting to the cleint")
 	@GetMapping("/listall")
 	public ResponseEntity<List<Product>> readAllProduct(){
 		
@@ -50,6 +56,7 @@ public class ProductController {
 //		return service.getById(id);
 //	}
 	
+	@Operation(summary = "put method updates the data by id", description = "getting the id from pathvariable and updating the db")
 	@PutMapping("/update/{id}")
 	public ResponseEntity<List<Product>> updateProduct(@RequestBody Product prd, @PathVariable("id") int id){
 		prd.setId(id);
@@ -58,6 +65,7 @@ public class ProductController {
 		return new ResponseEntity<>(listPr, HttpStatus.OK);
 	}
 	
+	@Operation(summary = "delete method deletes the data by id", description = "getting the id from pathvariable and deleting the record from the db")
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<List<Product>> deleteProduct(@PathVariable("id") int id){
 		
