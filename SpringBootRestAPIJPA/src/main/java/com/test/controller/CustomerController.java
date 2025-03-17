@@ -3,6 +3,8 @@ package com.test.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,24 +29,29 @@ public class CustomerController {
 	}
 	
 	@PostMapping("/create")
-	public Customer createCustomer(@RequestBody Customer cst) {
-		return service.createCustomer(cst);
+	public ResponseEntity<Customer> createCustomer(@RequestBody Customer cst) {
+		Customer cust = service.createCustomer(cst);
+		return new ResponseEntity<Customer>(cust, HttpStatus.NO_CONTENT);
 	}
 	
 	@GetMapping("/listall")
-	public List<Customer> listAllCustomers(){
-		return service.readAllCustomers();
+	public ResponseEntity<List<Customer>> listAllCustomers(){
+		
+		List<Customer> cstList = service.readAllCustomers();
+		return new ResponseEntity<List<Customer>>(cstList, HttpStatus.NO_CONTENT);
 	}
 	
 	@PutMapping("/update/{id}")
-	public List<Customer> updateCustomer(@RequestBody Customer  cst, @PathVariable("id") int id){
+	public ResponseEntity<List<Customer>> updateCustomer(@RequestBody Customer  cst, @PathVariable("id") int id){
 		cst.setId(id);
-		return service.updateCustomer(cst);
+		List<Customer> cstList = service.updateCustomer(cst);
+		return new ResponseEntity<List<Customer>>(cstList, HttpStatus.NO_CONTENT);
 	}
 	
 	@DeleteMapping("/delete/{id}")
-	public List<Customer> deleteCustomer(@PathVariable("id") int id){
-		return service.deleteCustomer(id);
+	public ResponseEntity<List<Customer>> deleteCustomer(@PathVariable("id") int id){
+		List<Customer> cstList =  service.deleteCustomer(id);
+		return new ResponseEntity<List<Customer>>(cstList, HttpStatus.NO_CONTENT);
 	}
 	
 }
