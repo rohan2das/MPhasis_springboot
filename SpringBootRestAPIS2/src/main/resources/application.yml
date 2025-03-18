@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: SpringBootRestAPIS2
+    
+
+server:
+  port: 8008
