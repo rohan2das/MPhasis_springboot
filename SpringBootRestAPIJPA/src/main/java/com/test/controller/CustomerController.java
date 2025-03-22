@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,8 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.test.entity.Customer;
 import com.test.service.CustomerService;
 
+
 @RestController
-@RequestMapping("/customer/v1")
+@RequestMapping("/api")
+@CrossOrigin(origins = "http://localhost:4200")
 public class CustomerController {
 
 	@Autowired
@@ -28,30 +31,34 @@ public class CustomerController {
 		this.service = service;
 	}
 	
-	@PostMapping("/create")
-	public ResponseEntity<Customer> createCustomer(@RequestBody Customer cst) {
-		Customer cust = service.createCustomer(cst);
-		return new ResponseEntity<Customer>(cust, HttpStatus.NO_CONTENT);
-	}
-	
-	@GetMapping("/listall")
-	public ResponseEntity<List<Customer>> listAllCustomers(){
+	@PostMapping("save-customer")
+	public boolean saveStudent(@RequestBody Customer cust) {
+		 return service.createCustomer(cust);
 		
-		List<Customer> cstList = service.readAllCustomers();
-		return new ResponseEntity<List<Customer>>(cstList, HttpStatus.NO_CONTENT);
 	}
 	
-	@PutMapping("/update/{id}")
-	public ResponseEntity<List<Customer>> updateCustomer(@RequestBody Customer  cst, @PathVariable("id") int id){
-		cst.setId(id);
-		List<Customer> cstList = service.updateCustomer(cst);
-		return new ResponseEntity<List<Customer>>(cstList, HttpStatus.NO_CONTENT);
+	@GetMapping("customer-list")
+	public List<Customer> allstudents() {
+		 return service.readAllCustomers();
 	}
 	
-	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<List<Customer>> deleteCustomer(@PathVariable("id") int id){
-		List<Customer> cstList =  service.deleteCustomer(id);
-		return new ResponseEntity<List<Customer>>(cstList, HttpStatus.NO_CONTENT);
+	@PutMapping("update-customer/{cust_id}")
+	public boolean updateStudent(@RequestBody Customer cust,@PathVariable("cust_id") int cust_id) {
+		cust.setCustomer_id(cust_id);
+		return service.updateCustomer(cust);
+	}
+	
+	@DeleteMapping("delete-customer/{cust_id}")
+	public boolean deleteStudent(@PathVariable("cust_id") int cust_id,Customer cust) {
+		cust.setCustomer_id(cust_id);
+		return service.deleteCustomer(cust);
+	}
+	
+	@GetMapping("customer/{cust_id}")
+	public List<Customer> allCustomerByID(@PathVariable("cust_id") int cust_id,Customer cust) {
+		cust.setCustomer_id(cust_id);
+		 return service.getCustByID(cust);
+		
 	}
 	
 }

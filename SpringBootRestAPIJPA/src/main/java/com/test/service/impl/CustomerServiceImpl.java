@@ -20,18 +20,9 @@ public class CustomerServiceImpl implements CustomerService{
 	}
 
 	@Override
-	public Customer createCustomer(Customer cst) {
+	public boolean createCustomer(Customer cst) {
 
-		try {
-			if(cst!=null) {
-				customerDao.createCustomer(cst);
-			}
-			
-		} catch (RuntimeException e) {
-			e.printStackTrace();
-		}
-		
-		return cst;
+		return customerDao.createCustomer(cst);
 	}
 
 	@Override
@@ -39,37 +30,28 @@ public class CustomerServiceImpl implements CustomerService{
 
 		List<Customer> list=customerDao.readAllCustomers();
 		
-		if(list.size() <0) {
-			System.out.println("no content");
-		}
-		
 		return list;
 	}
 
 	@Override
-	public List<Customer> updateCustomer(Customer cst) {
+	public boolean updateCustomer(Customer cst) {
 
-		try {
-			if(cst!=null) {
-				customerDao.updateCustomer(cst);
-			}
-		} catch (RuntimeException e) {
-			e.printStackTrace();
-		}
-		return customerDao.readAllCustomers();
+		return customerDao.updateCustomer(cst);
+		
 	}
 
 	@Override
-	public List<Customer> deleteCustomer(int id) {
+	public boolean deleteCustomer(Customer cst) {
+		
+		return customerDao.deleteCustomer(cst);
+		
+	}
 
-		try {
-			if(id!=0) {
-				customerDao.deleteCustomer(id);
-			}
-		} catch (RuntimeException e) {
-			e.printStackTrace();
-		}
-		return customerDao.readAllCustomers();
+	@Override
+	public List<Customer> getCustByID(Customer cust) {
+		
+		return customerDao.getCustById(cust);
+		
 	}
 	
 }
